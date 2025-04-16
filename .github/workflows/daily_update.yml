@@ -1,0 +1,29 @@
+# .github/workflows/daily_update.yml
+
+name: Fetch Yahoo Finance Data Daily
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs at 00:00 UTC every day
+  workflow_dispatch:  # Optional: allows manual run
+
+jobs:
+  run-daily-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Python script
+        run: |
+          python main.py
