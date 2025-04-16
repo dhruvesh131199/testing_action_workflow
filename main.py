@@ -10,6 +10,7 @@ def fetch_yahoo_data(ticker):
     data.reset_index(inplace=True)
     data.columns = ["date", "close", "high", "low", "open", "volume"]
     data['Ticker'] = ticker
+    data.head()
     return data
 
 def update_csv(file_path, new_data):
