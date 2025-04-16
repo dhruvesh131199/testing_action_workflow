@@ -1,11 +1,9 @@
-# .github/workflows/daily_update.yml
-
 name: Fetch Yahoo Finance Data Daily
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs at 00:00 UTC every day
-  workflow_dispatch:  # Optional: allows manual run
+    - cron: '0 0 * * *'  # Every day at 00:00 UTC
+  workflow_dispatch:      # Allow manual trigger from GitHub UI
 
 jobs:
   run-daily-script:
@@ -14,6 +12,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: Set up Python
         uses: actions/setup-python@v4
