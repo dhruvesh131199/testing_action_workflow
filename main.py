@@ -8,6 +8,7 @@ def fetch_yahoo_data(ticker):
     data = yf.download(ticker, period="1d", interval="1d")
     #data = yf.download(ticker, start = "2025-04-01", end = "2025-04-05")
     data.reset_index(inplace=True)
+    data.columns = ["date", "close", "high", "low", "open", "volume"]
     data['Ticker'] = ticker
     return data
 
