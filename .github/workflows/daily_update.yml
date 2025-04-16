@@ -3,7 +3,7 @@ name: Fetch Yahoo Finance Data Daily
 on:
   schedule:
     - cron: '0 0 * * *'  # Every day at 00:00 UTC
-  workflow_dispatch:      # Allow manual trigger from GitHub UI
+  workflow_dispatch:
 
 jobs:
   run-daily-script:
@@ -33,3 +33,11 @@ jobs:
       - name: Run Python script
         run: |
           python main.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add stock_data.csv run_log.txt
+          git commit -m "Update data and log on $(date -u +"%Y-%m-%d %H:%M:%S")" || echo "No changes to commit"
+          git push
