@@ -17,7 +17,7 @@ def update_csv(file_path, new_data):
     try:
         existing_data = pd.read_csv(file_path)
         updated_data = pd.concat([existing_data, new_data], ignore_index=True)
-        updated_data.drop_duplicates(subset=["Date", "Ticker"], inplace=True)
+        updated_data.drop_duplicates(subset=["date", "Ticker"], inplace=True)
     except FileNotFoundError:
         updated_data = new_data
 
